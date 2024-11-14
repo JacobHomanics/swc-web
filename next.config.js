@@ -203,10 +203,15 @@ const V1_ACTION_REDIRECTS = ACTION_REDIRECTS.map(({ destination, queryKey, query
 const nextConfig = {
   experimental: {
     instrumentationHook: true,
+    serverSourceMaps: false,
+    turbotrace: {},
   },
   eslint: {
     ignoreDuringBuilds: true,
   },
+  outputFileTracing: false,
+  productionBrowserSourceMaps: false,
+
   images: {
     minimumCacheTTL: 60 * 60 * 24 * 7, // 7 days
     unoptimized: false,

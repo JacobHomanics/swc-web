@@ -3,7 +3,6 @@ import { PrismaPlanetScale } from '@prisma/adapter-planetscale'
 import { PrismaClient } from '@prisma/client'
 import { PrismaClientOptions } from '@prisma/client/runtime/library'
 import logQuery from 'prisma/extensions/logQuery'
-import { fetch as undiciFetch } from 'undici'
 
 import { IS_DEVELOPING_OFFLINE } from '@/utils/shared/executionEnvironment'
 import { requiredEnv } from '@/utils/shared/requiredEnv'
@@ -22,7 +21,7 @@ const createPrisma = () => {
       log,
     })
   }
-  const client = new Client({ url: DATABASE_URL, fetch: undiciFetch })
+  const client = new Client({ url: DATABASE_URL, fetch })
   const adapter = new PrismaPlanetScale(client)
   return isLogDatabaseActive
     ? new PrismaClient({
