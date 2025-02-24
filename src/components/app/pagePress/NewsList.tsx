@@ -8,12 +8,11 @@ import { PageSubTitle } from '@/components/ui/pageSubTitle'
 import { Skeleton } from '@/components/ui/skeleton'
 import { TrackedExternalLink } from '@/components/ui/trackedExternalLink'
 import { TrackedInternalLink } from '@/components/ui/trackedInternalLink'
-// import {
-//   getNewsList,
-//   NEWS_LIST_LIMIT,
-//   NormalizedNews,
-// } from '@/utils/server/builder/models/data/news'
-import type { NormalizedNews } from '@/utils/server/builder/models/data/news'
+import {
+  getNewsList,
+  NEWS_LIST_LIMIT,
+  NormalizedNews,
+} from '@/utils/server/builder/models/data/news'
 import { AnalyticActionType, AnalyticComponentType } from '@/utils/shared/sharedAnalytics'
 
 interface NewsListProps {
@@ -31,22 +30,20 @@ export function NewsList({ initialNews }: NewsListProps) {
   })
 
   const loadModeNews = useCallback(async () => {
-    return
+    if (offset === -1) return
 
-    // if (offset === -1) return
+    setIsLoading(true)
+    const newOffset = offset + 1
+    const newNews = await getNewsList(newOffset)
+    setIsLoading(false)
 
-    // setIsLoading(true)
-    // const newOffset = offset + 1
-    // const newNews = await getNewsList(newOffset)
-    // setIsLoading(false)
+    if (!newNews || newNews.length < NEWS_LIST_LIMIT) {
+      setOffset(-1)
+    } else {
+      setOffset(newOffset)
+    }
 
-    // if (!newNews || newNews.length < NEWS_LIST_LIMIT) {
-    //   setOffset(-1)
-    // } else {
-    //   setOffset(newOffset)
-    // }
-
-    // setNews([...news, ...newNews])
+    setNews([...news, ...newNews])
   }, [news, offset])
 
   useEffect(() => {
