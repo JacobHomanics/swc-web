@@ -14,24 +14,23 @@ import { intlNumberFormat } from '@/utils/web/intlNumberFormat'
 
 interface SumDonationsCounterProps {
   initialData: SumDonations
-  countryCode: SupportedCountryCodes
 }
 
 export function SumDonationsCounter(props: SumDonationsCounterProps) {
   const { data } = useLiveSumDonations(props)
   const formatted = useMemo(() => {
-    return intlNumberFormat(COUNTRY_CODE_TO_LOCALE[props.countryCode], {
+    return intlNumberFormat(COUNTRY_CODE_TO_LOCALE[SupportedCountryCodes.US], {
       style: 'currency',
       currency: SupportedFiatCurrencyCodes.USD,
       maximumFractionDigits: 0,
     }).format(data.amountUsd)
-  }, [props.countryCode, data.amountUsd])
+  }, [data.amountUsd])
   return <AnimatedNumericOdometer className="text-primary-cta" size={60} value={formatted} />
 }
 
-function useLiveSumDonations({ countryCode, initialData }: SumDonationsCounterProps) {
+function useLiveSumDonations({ initialData }: SumDonationsCounterProps) {
   return useSWR(
-    apiUrls.totalDonations(countryCode),
+    apiUrls.totalDonations(),
     url =>
       fetchReq(url)
         .then(res => res.json())

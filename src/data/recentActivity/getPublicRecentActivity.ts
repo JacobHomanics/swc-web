@@ -12,7 +12,6 @@ import { prismaClient } from '@/utils/server/prismaClient'
 interface RecentActivityConfig {
   limit: number
   offset?: number
-  countryCode: string
 }
 
 const fetchFromPrisma = async (config: RecentActivityConfig) => {
@@ -48,9 +47,6 @@ const fetchFromPrisma = async (config: RecentActivityConfig) => {
         },
         userActionVotingDay: true,
         userActionRefer: true,
-      },
-      where: {
-        countryCode: config.countryCode,
       },
     })
     .then(userActions =>

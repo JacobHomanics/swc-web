@@ -134,8 +134,7 @@ export const apiUrls = {
     stateCode: string
     districtNumber: number
   }) => `/api/public/dtsi/by-geography/usa/${stateCode}/${districtNumber}`,
-  totalDonations: (countryCode: SupportedCountryCodes) =>
-    `/api/public/total-donations/${countryCode}`,
+  totalDonations: () => `/api/public/total-donations`,
   userPerformedUserActionTypes: () => `/api/identified-user/performed-user-action-types`,
   userFullProfileInfo: () => `/api/identified-user/full-profile-info`,
   detectWipedDatabase: () => `/api/identified-user/detect-wiped-database`,
